@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 const resource = 'leaderboard'
+const requiredEndpoint = `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard`
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
 const baseHost = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
