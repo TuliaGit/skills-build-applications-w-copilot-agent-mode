@@ -1,6 +1,7 @@
 import express from "express";
-import mongoose from "mongoose";
-import { PORT, MONGO_URI, API_URL } from "./config.js";
+import { PORT, API_URL } from "./config.js";
+import { connectDatabase } from "./database.js";
+import mongoose from "./database.js";
 import usersRouter from "./routes/users.js";
 import teamsRouter from "./routes/teams.js";
 import activitiesRouter from "./routes/activities.js";
@@ -25,12 +26,10 @@ app.use("/api/activities", activitiesRouter);
 app.use("/api/leaderboard", leaderboardRouter);
 app.use("/api/workouts", workoutsRouter);
 
-mongoose
-  .connect(MONGO_URI)
+connectDatabase()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server listening on http://localhost:${PORT}`);
-      console.log(`Connected to MongoDB at ${MONGO_URI}`);
       console.log(`API URL set to ${API_URL}`);
     });
   })
