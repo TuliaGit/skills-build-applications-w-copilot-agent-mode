@@ -71,3 +71,11 @@ export default defineConfig([
   },
 ])
 ```
+
+## Codespaces environment
+
+This frontend reads `import.meta.env.VITE_CODESPACE_NAME` to construct the API host URL in Codespaces. Define it in a local env file such as `.env.local`:
+
+```env
+VITE_CODESPACE_NAME=your-codespace-name
+```
