@@ -1,5 +1,5 @@
 import express from "express";
-import { PORT, API_URL } from "./config.js";
+import { PORT } from "./config.js";
 import { connectDatabase } from "./database.js";
 import mongoose from "./database.js";
 import usersRouter from "./routes/users.js";
@@ -8,9 +8,13 @@ import activitiesRouter from "./routes/activities.js";
 import leaderboardRouter from "./routes/leaderboard.js";
 import workoutsRouter from "./routes/workouts.js";
 const app = express();
+const codespaceName = process.env.CODESPACE_NAME;
+const apiUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : `http://localhost`;
 app.use(express.json());
 app.get("/", (_req, res) => {
-    res.json({ message: "OctoFit Tracker API is running", apiUrl: API_URL });
+    res.json({ message: "OctoFit Tracker API is running", apiUrl });
 });
 app.get("/health", (_req, res) => {
     res.json({ status: "ok", mongodb: mongoose.connection.readyState });
@@ -24,7 +28,7 @@ connectDatabase()
     .then(() => {
     app.listen(PORT, () => {
         console.log(`Server listening on http://localhost:${PORT}`);
-        console.log(`API URL set to ${API_URL}`);
+        console.log(`API URL set to ${apiUrl}`);
     });
 })
     .catch((error) => {
