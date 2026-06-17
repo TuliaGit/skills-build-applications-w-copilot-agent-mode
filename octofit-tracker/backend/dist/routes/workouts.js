@@ -1,0 +1,13 @@
+import { Router } from "express";
+import { Workout } from "../models/workout.js";
+const router = Router();
+router.get("/", async (_req, res) => {
+    const workouts = await Workout.find().lean();
+    res.json({ workouts, message: "List workouts" });
+});
+router.post("/", async (req, res) => {
+    const workout = await Workout.create(req.body);
+    res.status(201).json({ workout, message: "Create a new workout" });
+});
+export default router;
+//# sourceMappingURL=workouts.js.map
